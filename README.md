@@ -1,48 +1,48 @@
-#Database Refactoring Workshop
+# Database Refactoring Workshop
 
 Course materials for the Liquibase Workshop.
 
-##Requirements
+## Requirements
 
 * JDK 1.6+
 
-##Environment Setup
+## Environment Setup
 
 1. Download workshop files
     * Use Git:
-        * git clone https://github.com/stevesaliman/liquibase-workshop
+        * `git clone https://github.com/stevesaliman/liquibase-workshop`
 	* Download the ZIP:
 	    * [https://github.com/stevesaliman/liquibase-workshop/zipball/master](https://github.com/stevesaliman/liquibase-workshop/zipball/master)
 	* Put workshop files in a directory of your choosing.
-	
+
 1. Install Gradle using the wrapper
     * Run the `gradlew` script to download and install the Gradle executable locally
-        
+
 1. Be sure to keep a browser window open to the excellent [Liquibase docs](http://www.liquibase.org/documentation/index.html)
 
 
-##Database Setup
+## Database Setup
 
 1. To initialize your embedded H2 Database schema, run the following:
 
     `gradlew buildSchema`
 
-1. To start up the H2 Database server and open the management interface in the browser, run the following command. Note that this task runs a Java program in the H2 Database distribution, and that program does not exit automatically. You will have to hit CTRL-C to return to the command line. 
+1. To start up the H2 Database server and open the management interface in the browser, run the following command. Note that this task runs a Java program in the H2 Database distribution, and that program does not exit automatically. You will have to hit CTRL-C to return to the command line.
 
     `gradlew startDatabase`
-   
+
 1. Alternatively, run the `gradle createDatabaseScript` task, which will produce a script called `starth2` (on Mac and Linux) or `starth2.bat` (on Windows). You can then start the database by running this script from the command line, which keeps the database running in the background while you continue to interact with workshop tasks.
-   
+
 1. To log into the H2 Database web interface, visit `http://localhost:8082`. You will see a connect dialog with default values. Enter `jdbc:h2:db/liquibase_workshop;FILE_LOCK=NO` for the JDBC URL, but leave the defaults everywhere else. Click the connect button to log in.
 
 1. To begin using Liquibase on the embedded database, run the following two commands:
 
     `gradlew generateChangeLog`
-    
+
     `gradlew changeLogSync`
 
 
-##Exercises 
+## Exercises
 
 1. Rename Table
 	* Rename the inv table to invoice
@@ -104,6 +104,3 @@ Course materials for the Liquibase Workshop.
 1. Remap foreign keys
 	* Add an integer column to line\_item\_detail called line\_item\_id
 	* Write an UPDATE query to set its values to line\_item.id
-
-
-
