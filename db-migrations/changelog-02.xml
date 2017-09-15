@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="2 Rename columns 1" author="baradist@ya.ru">
+        <renameColumn tableName="INVOICE" oldColumnName="INVID" newColumnName="ID" columnDataType="INT(11)"/>
+        <rollback>
+            <renameColumn tableName="INVOICE" oldColumnName="ID" newColumnName="INVID" columnDataType="INT(11)"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="2 Rename columns 2" author="baradist@ya.ru">
+        <renameColumn tableName="INVOICE" oldColumnName="INVNUMBER" newColumnName="INVOICE_NUMBER" columnDataType="VARCHAR(75)"/>
+        <rollback>
+            <renameColumn tableName="INVOICE" oldColumnName="INVOICE_NUMBER" newColumnName="INVNUMBER" columnDataType="VARCHAR(75)"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="2 Rename columns 3" author="baradist@ya.ru">
+        <renameColumn tableName="INVOICE" oldColumnName="DATETIMECREATED" newColumnName="DATE_CREATED" columnDataType="TIMESTAMP"/>
+        <rollback>
+            <renameColumn tableName="INVOICE" oldColumnName="DATE_CREATED" newColumnName="DATETIMECREATED" columnDataType="TIMESTAMP"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

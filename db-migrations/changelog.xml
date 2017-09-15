@@ -8,4 +8,5 @@
         <sqlFile path="create-schema-mysql.sql"/>
     </changeSet>
     <include file="db-migrations/changelog-01.xml"/>
+    <include file="db-migrations/changelog-02.xml"/>
 </databaseChangeLog>
