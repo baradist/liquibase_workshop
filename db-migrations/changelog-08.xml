@@ -4,13 +4,10 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet id="20170913-1" author="baradist@ya.ru">
-        <sqlFile path="create-schema-mysql.sql"/>
+    <changeSet id="08-1 Create a trigger" author="baradist@ya.ru">
+        <sqlFile path="db-migrations/triggers/contact_insert.sql"/>
     </changeSet>
-    <include file="db-migrations/changelog-01.xml"/>
-    <include file="db-migrations/changelog-02.xml"/>
-    <include file="db-migrations/changelog-03.xml"/>
-    <include file="db-migrations/changelog-04.xml"/>
-    <include file="db-migrations/changelog-07.xml"/>
-    <include file="db-migrations/changelog-08.xml"/>
+    <changeSet id="08-2 Create a trigger" author="baradist@ya.ru">
+        <sqlFile path="db-migrations/triggers/contact_update.sql"/>
+    </changeSet>
 </databaseChangeLog>
