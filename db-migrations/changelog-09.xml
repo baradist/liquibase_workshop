@@ -1,0 +1,53 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="09-1 create table: payment_terms" author="baradist@ya.ru">
+        <createTable tableName="payment_terms">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="terms" type="VARCHAR(50)">
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="payment_terms"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="09-2 populate payment_terms" author="baradist@ya.ru">
+        <sql>
+            INSERT INTO payment_terms (terms)
+            SELECT distinct terms FROM invoice;
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM payment_terms
+            </sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="09-3 Add a column to the invoice table" author="baradist@ya.ru">
+        <addColumn tableName="INVOICE">
+            <column name="payment_terms_id" type="BIGINT">
+                <constraints foreignKeyName="fk_invoice_payment_terms" referencedTableName="payment_terms" referencedColumnNames="id"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="INVOICE" columnName="payment_terms_id"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="09-4 set payment_terms_id" author="baradist@ya.ru">
+        <sql>
+            UPDATE invoice i
+            INNER JOIN payment_terms pt ON i.terms = pt.terms
+            SET i.payment_terms_id = pt.id
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE invoice
+                SET payment_terms_id = null
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
