@@ -1,6 +1,7 @@
 # Database Refactoring Workshop
 
 Course materials for the Liquibase Workshop.
+Xml-based solution for MySQL.
 
 ## Requirements
 
@@ -23,24 +24,17 @@ Course materials for the Liquibase Workshop.
 
 ## Database Setup
 
-1. To initialize your embedded H2 Database schema, run the following:
+To initialize your Database, create a new schema (for example liquibase_workshop) 
+and change db-login and password at build.gradle
 
-    `gradlew buildSchema`
+## liquibase-gradle-plugin commandline arguments
 
-1. To start up the H2 Database server and open the management interface in the browser, run the following command. Note that this task runs a Java program in the H2 Database distribution, and that program does not exit automatically. You will have to hit CTRL-C to return to the command line.
-
-    `gradlew startDatabase`
-
-1. Alternatively, run the `gradle createDatabaseScript` task, which will produce a script called `starth2` (on Mac and Linux) or `starth2.bat` (on Windows). You can then start the database by running this script from the command line, which keeps the database running in the background while you continue to interact with workshop tasks.
-
-1. To log into the H2 Database web interface, visit `http://localhost:8082`. You will see a connect dialog with default values. Enter `jdbc:h2:db/liquibase_workshop;FILE_LOCK=NO` for the JDBC URL, but leave the defaults everywhere else. Click the connect button to log in.
-
-1. To begin using Liquibase on the embedded database, run the following two commands:
-
-    `gradlew generateChangeLog`
-
-    `gradlew changeLogSync`
-
+To put any argument through a gradle task into a liquibase use 
+<p/>gradlew taskName -PliquibaseCommandValue=&lt;value&gt;
+<p/>For instance:
+<p/>  gradlew tag -PliquibaseCommandValue=tagname
+<p/>  gradlew rollback -PliquibaseCommandValue=tagname
+<p/>  gradlew rollbackCount -PliquibaseCommandValue=1
 
 ## Exercises
 
@@ -68,9 +62,9 @@ Course materials for the Liquibase Workshop.
 	* Don't run this refactoring yet!
 1. Tagging and rolling back
 	* Tag the database, then run the table rename refactoring written in the previous step
-		* gradle tag -Dtag=&lt;tagname&gt;
+		* gradle tag -PliquibaseCommandValue=&lt;tagname&gt;
 	* Now roll back to continue development on the refactoring
-		* gradle rollback -Dtag=&lt;tagname&gt;
+		* gradle rollback -PliquibaseCommandValue=&lt;tagname&gt;
 1. Finish refactoring of contact\_ball\_of\_mud
 	* Write data transformation code to populate the three tables from their source
 	* Remember that security\_info and credit\_card should have foreign keys to contact. Be sure to add these constraints with the appropriate refactorings
