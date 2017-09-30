@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="11 Remap foreign keys - add column" author="baradist@ya.ru">
+        <addColumn tableName="line_item_detail">
+            <column name="line_item_id" type="BIGINT">
+                <constraints foreignKeyName="fk_li_detail_li" referencedTableName="line_item" referencedColumnNames="id"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="line_item_detail" columnName="line_item_id"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="11 Remap foreign keys - fill column" author="baradist@ya.ru">
+        <sql>
+            UPDATE line_item_detail lid
+            INNER JOIN line_item li ON lid.invoice_id = li.invid AND lid.row_number = li.rownum
+            SET lid.line_item_id = li.id
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE line_item_detail
+                SET line_item_id = NULL
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
