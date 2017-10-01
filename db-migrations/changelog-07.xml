@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="07-1 create column: contact.full_name" author="baradist@ya.ru">
+        <addColumn tableName="contact">
+            <column name="full_name" type="VARCHAR(91)"></column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="contact" columnName="full_name"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="07-2 update column" author="baradist@ya.ru">
+        <sql>
+            UPDATE contact
+            SET full_name = CONCAT(givenname, ' ', middleinitial, ' ', surname)
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE contact
+                SET full_name = null
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
