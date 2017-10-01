@@ -9,4 +9,5 @@
     </changeSet>
     <include file="db-migrations/changelog-01.xml"/>
     <include file="db-migrations/changelog-02.xml"/>
+    <include file="db-migrations/changelog-03.xml"/>
 </databaseChangeLog>
