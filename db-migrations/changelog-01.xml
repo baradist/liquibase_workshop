@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="1. Rename Table - INVOICE" author="baradist@ya.ru">
+        <renameTable oldTableName="INV" newTableName="INVOICE"/>
+        <rollback>
+            <renameTable oldTableName="INVOICE" newTableName="INV"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="1. Rename Table - LINE_ITEM" author="baradist@ya.ru">
+        <renameTable oldTableName="LINEITEM" newTableName="LINE_ITEM"/>
+        <rollback>
+            <renameTable oldTableName="LINE_ITEM" newTableName="LINEITEM"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="1. Rename Table - LINE_ITEM_DETAIL" author="baradist@ya.ru">
+        <renameTable oldTableName="LIDETAIL" newTableName="LINE_ITEM_DETAIL"/>
+        <rollback>
+            <renameTable oldTableName="LINE_ITEM_DETAIL" newTableName="LIDETAIL"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

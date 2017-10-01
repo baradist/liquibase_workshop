@@ -7,4 +7,5 @@
     <changeSet id="Create schema" author="baradist@ya.ru">
         <sqlFile path="create-schema-mysql.sql"/>
     </changeSet>
+    <include file="db-migrations/changelog-01.xml"/>
 </databaseChangeLog>
