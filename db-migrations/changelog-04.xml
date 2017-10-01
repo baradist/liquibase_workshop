@@ -1,0 +1,110 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="Create tables: contact" author="baradist@ya.ru">
+        <createTable tableName="contact">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="givenname" type="VARCHAR(45)">
+            </column>
+            <column name="middleinitial" type="VARCHAR(45)">
+            </column>
+            <column name="surname" type="VARCHAR(45)">
+            </column>
+            <column name="gender" type="VARCHAR(45)">
+            </column>
+            <column name="emailaddress" type="VARCHAR(45)">
+            </column>
+            <column name="streetaddress" type="VARCHAR(45)">
+            </column>
+            <column name="birthday" type="DATETIME">
+            </column>
+            <column name="Occupation" type="VARCHAR(45)">
+            </column>
+            <column name="NationalID" type="VARCHAR(45)">
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="contact"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="4 populate contact" author="baradist@ya.ru">
+        <sql>
+            INSERT INTO contact (id, givenname, middleinitial, surname, gender, emailaddress, streetaddress, birthday, Occupation, NationalID)
+            SELECT id, givenname, middleinitial, surname, gender, emailaddress, streetaddress, birthday, Occupation, NationalID
+            FROM contact_ball_of_mud
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM contact
+            </sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="4 Create tables: security_info" author="baradist@ya.ru">
+        <createTable tableName="security_info">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="contact_id" type="BIGINT">
+                <constraints foreignKeyName="fk_securityinfo_contact" referencedTableName="contact" referencedColumnNames="id"/>
+            </column>
+            <column name="password" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mothersmaiden" type="VARCHAR(45)">
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="security_info"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="4 populate security_info" author="baradist@ya.ru">
+        <sql>
+            INSERT INTO security_info (contact_id, password, mothersmaiden)
+            SELECT contact_ball_of_mud.id, contact_ball_of_mud.password, contact_ball_of_mud.mothersmaiden
+            FROM contact_ball_of_mud
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM security_info
+            </sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="4 create table: credit_card" author="baradist@ya.ru">
+        <createTable tableName="credit_card">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="contact_id" type="BIGINT">
+                <constraints foreignKeyName="fk_creditcard_contact" referencedTableName="contact" referencedColumnNames="id"/>
+            </column>
+            <column name="CCType" type="VARCHAR(45)">
+            </column>
+            <column name="CCNumber" type="VARCHAR(45)">
+            </column>
+            <column name="CCExpires" type="DATETIME">
+            </column>
+            <column name="CVV2" type="VARCHAR(5)">
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="credit_card"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="4 populate credit_card" author="baradist@ya.ru">
+        <sql>
+            INSERT INTO credit_card (contact_id, CCType, CCNumber, CCExpires, CVV2)
+            SELECT contact_ball_of_mud.id, contact_ball_of_mud.CCType, contact_ball_of_mud.CCNumber, contact_ball_of_mud.CCExpires, contact_ball_of_mud.CVV2
+            FROM contact_ball_of_mud
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM credit_card
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
